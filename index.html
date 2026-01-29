@@ -1,17 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <title>Glitters</title>
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BLE Scanner</title>
+  <meta name="theme-color" content="#000000">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+  <h2>Glitters</h2>
 
-<h2>BLE Device Scanner</h2>
+  <div class="section">
+    <button onclick="connect()">Connect</button>
+    <button onclick="disconnect()">Disconnect</button>
+  </div>
 
-<button onclick="scanAndConnect()">Scan & Connect</button>
+  <div class="section">
+    <label>Color</label><br>
+    <input type="color" id="colorPicker">
+  </div>
 
-<p id="status">Status: Idle</p>
+  <div class="section">
+    <label>Brightness</label><br>
+    <input type="range" min="0" max="255" value="255" id="brightness">
+  </div>
 
-<script src="ble.js"></script>
+  <div class="section">
+    <label>Breathing Effects</label><br>
+    <button onclick="setEffect(0x5E)">Red</button>
+    <button onclick="setEffect(0x5F)">Green</button>
+    <button onclick="setEffect(0x60)">Blue</button>
+    <button onclick="setEffect(0x61)">Yellow</button>
+    <button onclick="setEffect(0x62)">Cyan</button>
+    <button onclick="setEffect(0x63)">Purple</button>
+    <button onclick="setEffect(0x64)">White</button>
+  </div>
+
+  <p id="status">Disconnected</p>
+
+  <script src="app.js"></script>
 </body>
 </html>
