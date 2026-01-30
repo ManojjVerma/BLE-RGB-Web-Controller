@@ -40,6 +40,15 @@ function disconnect() {
   }
 }
 
+function powerOn() {
+  send([0xA0, 0x62, 0x01, 0x01]);
+}
+
+function powerOff() {
+  send([0xA0, 0x62, 0x01, 0x00]);
+}
+
+
 function send(bytes) {
   if (!characteristic) return;
   characteristic.writeValue(new Uint8Array(bytes));

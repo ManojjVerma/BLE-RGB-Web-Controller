@@ -13,23 +13,72 @@ body {
 
 /* ===== HEADER ===== */
 .app-header {
-  text-align: center;
-  padding: 28px 16px 20px;
+  padding: 20px 14px;
+  max-width: 420px;
+  margin: auto;
 }
 
+/* Header Card */
+.header-card {
+  position: relative;
+  background: radial-gradient(circle at top, #1f1f2a, #121218);
+  border-radius: 22px;
+  padding: 28px 16px 24px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.7);
+  overflow: hidden;
+  text-align: center;
+}
+
+/* STRONG Sparkles */
+.header-card::before,
+.header-card::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background-image:
+    radial-gradient(3px 3px at 15% 25%, rgba(255,255,255,1), transparent),
+    radial-gradient(2px 2px at 60% 35%, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2.5px 2.5px at 40% 70%, rgba(255,255,255,0.8), transparent),
+    radial-gradient(3px 3px at 80% 75%, rgba(255,255,255,0.9), transparent),
+    radial-gradient(2px 2px at 30% 55%, rgba(255,255,255,0.7), transparent);
+  animation: sparkleFloat 8s linear infinite;
+  pointer-events: none;
+}
+
+.header-card::after {
+  animation-delay: 4s;
+  opacity: 0.8;
+}
+
+/* Logo */
 .logo {
-  font-size: 36px;
-  font-weight: 800;
-  background: linear-gradient(45deg, #ff0080, #00ffff, #ffff00);
+  position: relative;
+  z-index: 2;
+  font-size: clamp(46px, 10vw, 64px);
+  font-weight: 900;
+  letter-spacing: 2px;
+  background: linear-gradient(45deg, #ff4fd8, #00ffff, #fff04d);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  letter-spacing: 1px;
+  text-shadow:
+    0 0 10px rgba(255,255,255,0.3),
+    0 0 20px rgba(255,255,255,0.15);
 }
 
+/* Tagline */
 .tagline {
+  position: relative;
+  z-index: 2;
   font-size: 14px;
-  opacity: 0.7;
-  margin-top: 4px;
+  margin-top: 8px;
+  opacity: 0.75;
+}
+
+/* Sparkle animation */
+@keyframes sparkleFloat {
+  0%   { transform: translateY(0); opacity: 0.4; }
+  50%  { opacity: 1; }
+  100% { transform: translateY(-20px); opacity: 0.4; }
 }
 
 /* ===== LAYOUT ===== */
@@ -45,7 +94,7 @@ body {
   border-radius: 16px;
   padding: 16px;
   margin-bottom: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.5);
 }
 
 .card.center {
@@ -67,14 +116,15 @@ body {
 
 .btn {
   flex: 1;
-  padding: 12px;
-  border-radius: 12px;
+  padding: 14px;
+  border-radius: 14px;
   border: none;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
   cursor: pointer;
 }
 
+/* Connection */
 .primary {
   background: #00c6ff;
   color: #000;
@@ -82,6 +132,17 @@ body {
 
 .danger {
   background: #ff4b4b;
+  color: #fff;
+}
+
+/* Power */
+.power-on {
+  background: linear-gradient(135deg, #00ff9c, #00c853);
+  color: #000;
+}
+
+.power-off {
+  background: linear-gradient(135deg, #ff5252, #b71c1c);
   color: #fff;
 }
 
@@ -114,7 +175,7 @@ input[type="range"] {
   padding: 12px 8px;
   border-radius: 12px;
   border: none;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   color: #000;
 }
@@ -128,7 +189,7 @@ input[type="range"] {
 .effect.purple { background: #b266ff; }
 .effect.white  { background: #ffffff; }
 
-/* ===== TOUCH FEEL ===== */
+/* ===== TOUCH ===== */
 button:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
 }

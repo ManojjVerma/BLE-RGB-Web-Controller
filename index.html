@@ -15,14 +15,16 @@
 
   <!-- App Header -->
   <header class="app-header">
-    <h1 class="logo">Glitters</h1>
-    <p class="tagline">Smart RGB Controller</p>
+    <div class="header-card">
+      <h1 class="logo">Glitters</h1>
+      <p class="tagline">Smart RGB Controller</p>
+    </div>
   </header>
 
   <!-- Main Content -->
   <main class="container">
 
-    <!-- Connection Card -->
+    <!-- Connection -->
     <div class="card">
       <h2>Connection</h2>
       <div class="row">
@@ -32,19 +34,28 @@
       <p id="status" class="status">Disconnected</p>
     </div>
 
-    <!-- Color Picker Card -->
+    <!-- Power -->
+    <div class="card">
+      <h2>Power</h2>
+      <div class="row">
+        <button class="btn power-on" onclick="powerOn()">ON</button>
+        <button class="btn power-off" onclick="powerOff()">OFF</button>
+      </div>
+    </div>
+
+    <!-- Color -->
     <div class="card center">
       <h2>Color</h2>
       <div id="picker"></div>
     </div>
 
-    <!-- Brightness Card -->
+    <!-- Brightness -->
     <div class="card">
       <h2>Brightness</h2>
       <input type="range" min="0" max="255" value="255" id="brightness">
     </div>
 
-    <!-- Effects Card -->
+    <!-- Effects -->
     <div class="card">
       <h2>Breathing Effects</h2>
       <div class="effects-grid">
