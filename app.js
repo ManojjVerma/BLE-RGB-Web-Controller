@@ -2,15 +2,16 @@ let device;
 let server;
 let characteristic;
 
+/* ===== UUIDs ===== */
 const SERVICE_UUID = '0000ffe0-0000-1000-8000-00805f9b34fb';
 const CHAR_UUID    = '0000ffe1-0000-1000-8000-00805f9b34fb';
 
+/* ===== UI ===== */
 function status(msg) {
   document.getElementById('status').innerText = msg;
 }
 
-/* ---------- BLE ---------- */
-
+/* ===== BLE ===== */
 async function connect() {
   try {
     device = await navigator.bluetooth.requestDevice({
@@ -44,33 +45,77 @@ function send(bytes) {
   characteristic.writeValue(new Uint8Array(bytes));
 }
 
-/* ---------- RGB COLOR ---------- */
+/* ===== CONTROLLER STATE ===== */
+let desiredRGB = { r: 255, g: 0, b: 0 };
+let controllerMode = 'rgb'; // 'rgb' or 'effect'
+let lastSendTime = 0;
+let rgbSendScheduled = false;
 
-document.getElementById('colorPicker').addEventListener('input', e => {
-  const hex = e.target.value;
-  const r = parseInt(hex.substr(1, 2), 16);
-  const g = parseInt(hex.substr(3, 2), 16);
-  const b = parseInt(hex.substr(5, 2), 16);
+/* ===== RATE-LIMITED RGB SENDER ===== */
+function scheduleRGBSend() {
+  if (rgbSendScheduled) return;
+  rgbSendScheduled = true;
 
-  // 1️⃣ Switch to RGB mode
-  send([0xA0, 0x63, 0x01, 0xBE]);
-
-  // 2️⃣ Small delay before sending RGB
   setTimeout(() => {
-    send([0xA0, 0x69, 0x04, r, g, b, 0xFF]);
-  }, 60); // 60ms is safe
-});
+    rgbSendScheduled = false;
 
+    // Step 1: ensure RGB mode
+    if (controllerMode !== 'rgb') {
+      send([0xA0, 0x63, 0x01, 0xBE]);
+      controllerMode = 'rgb';
+    }
 
-/* ---------- BRIGHTNESS ---------- */
+    // Step 2: small settle delay
+    setTimeout(() => {
+      send([
+        0xA0,
+        0x69,
+        0x04,
+        desiredRGB.r,
+        desiredRGB.g,
+        desiredRGB.b,
+        0xFF
+      ]);
+    }, 120);
 
+  }, 500); // 🔑 HARD RATE LIMIT
+}
+
+/* ===== BRIGHTNESS ===== */
 document.getElementById('brightness').addEventListener('input', e => {
-  const v = parseInt(e.target.value);
-  send([0xA0, 0x66, 0x01, v]);
+  const value = parseInt(e.target.value);
+  send([0xA0, 0x66, 0x01, value]);
 });
 
-/* ---------- BREATHING EFFECTS ---------- */
-
+/* ===== EFFECTS ===== */
 function setEffect(mode) {
+  controllerMode = 'effect';
   send([0xA0, 0x63, 0x01, mode]);
 }
+
+/* ===== COLOR PICKER ===== */
+const picker = new iro.ColorPicker("#picker", {
+  width: 260,
+  color: "#ff0000",
+  layout: [
+    { component: iro.ui.Wheel },
+    { component: iro.ui.Slider, options: { sliderType: 'value' } },
+    { component: iro.ui.Slider, options: { sliderType: 'red' } },
+    { component: iro.ui.Slider, options: { sliderType: 'green' } },
+    { component: iro.ui.Slider, options: { sliderType: 'blue' } }
+  ]
+});
+
+picker.on('color:change', color => {
+  if (!characteristic) return;
+
+  // Update desired state ONLY
+  desiredRGB = {
+    r: color.rgb.r,
+    g: color.rgb.g,
+    b: color.rgb.b
+  };
+
+  // Ask sender to send when allowed
+  scheduleRGBSend();
+});

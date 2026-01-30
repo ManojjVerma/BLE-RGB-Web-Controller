@@ -1,28 +1,134 @@
+/* ===== RESET ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
 body {
-  font-family: system-ui, sans-serif;
-  background: #000;
-  color: #fff;
+  background: #0b0b0f;
+  color: #ffffff;
+}
+
+/* ===== HEADER ===== */
+.app-header {
   text-align: center;
-  padding: 20px;
+  padding: 28px 16px 20px;
 }
 
-h2 {
-  margin-bottom: 20px;
+.logo {
+  font-size: 36px;
+  font-weight: 800;
+  background: linear-gradient(45deg, #ff0080, #00ffff, #ffff00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 1px;
 }
 
-.section {
-  margin: 15px 0;
+.tagline {
+  font-size: 14px;
+  opacity: 0.7;
+  margin-top: 4px;
 }
 
-button {
-  padding: 10px 14px;
-  margin: 4px;
-  font-size: 15px;
-  border-radius: 8px;
+/* ===== LAYOUT ===== */
+.container {
+  max-width: 420px;
+  margin: auto;
+  padding: 10px;
+}
+
+/* ===== CARD ===== */
+.card {
+  background: #16161d;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.card.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card h2 {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+/* ===== BUTTONS ===== */
+.row {
+  display: flex;
+  gap: 12px;
+}
+
+.btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
   border: none;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-input[type="range"],
-input[type="color"] {
-  width: 80%;
+.primary {
+  background: #00c6ff;
+  color: #000;
+}
+
+.danger {
+  background: #ff4b4b;
+  color: #fff;
+}
+
+/* ===== STATUS ===== */
+.status {
+  margin-top: 10px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* ===== COLOR PICKER ===== */
+#picker {
+  margin-top: 10px;
+}
+
+/* ===== SLIDER ===== */
+input[type="range"] {
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* ===== EFFECTS ===== */
+.effects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.effect {
+  padding: 12px 8px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  color: #000;
+}
+
+/* Effect Colors */
+.effect.red    { background: #ff3b3b; }
+.effect.green  { background: #00ff8c; }
+.effect.blue   { background: #4da6ff; }
+.effect.yellow { background: #ffe600; }
+.effect.cyan   { background: #00ffff; }
+.effect.purple { background: #b266ff; }
+.effect.white  { background: #ffffff; }
+
+/* ===== TOUCH FEEL ===== */
+button:active {
+  transform: scale(0.97);
 }

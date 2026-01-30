@@ -6,41 +6,61 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#000000">
+
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <h2>Glitters</h2>
 
-  <div class="section">
-    <button onclick="connect()">Connect</button>
-    <button onclick="disconnect()">Disconnect</button>
-  </div>
+  <!-- App Header -->
+  <header class="app-header">
+    <h1 class="logo">Glitters</h1>
+    <p class="tagline">Smart RGB Controller</p>
+  </header>
 
-  <div class="section">
-    <label>Color</label><br>
-    <input type="color" id="colorPicker">
-  </div>
+  <!-- Main Content -->
+  <main class="container">
 
-  <div class="section">
-    <label>Brightness</label><br>
-    <input type="range" min="0" max="255" value="255" id="brightness">
-  </div>
+    <!-- Connection Card -->
+    <div class="card">
+      <h2>Connection</h2>
+      <div class="row">
+        <button class="btn primary" onclick="connect()">Connect</button>
+        <button class="btn danger" onclick="disconnect()">Disconnect</button>
+      </div>
+      <p id="status" class="status">Disconnected</p>
+    </div>
 
-  <div class="section">
-    <label>Breathing Effects</label><br>
-    <button onclick="setEffect(0x5E)">Red</button>
-    <button onclick="setEffect(0x5F)">Green</button>
-    <button onclick="setEffect(0x60)">Blue</button>
-    <button onclick="setEffect(0x61)">Yellow</button>
-    <button onclick="setEffect(0x62)">Cyan</button>
-    <button onclick="setEffect(0x63)">Purple</button>
-    <button onclick="setEffect(0x64)">White</button>
-  </div>
+    <!-- Color Picker Card -->
+    <div class="card center">
+      <h2>Color</h2>
+      <div id="picker"></div>
+    </div>
 
-  <p id="status">Disconnected</p>
+    <!-- Brightness Card -->
+    <div class="card">
+      <h2>Brightness</h2>
+      <input type="range" min="0" max="255" value="255" id="brightness">
+    </div>
 
+    <!-- Effects Card -->
+    <div class="card">
+      <h2>Breathing Effects</h2>
+      <div class="effects-grid">
+        <button class="effect red" onclick="setEffect(0x5E)">Red</button>
+        <button class="effect green" onclick="setEffect(0x5F)">Green</button>
+        <button class="effect blue" onclick="setEffect(0x60)">Blue</button>
+        <button class="effect yellow" onclick="setEffect(0x61)">Yellow</button>
+        <button class="effect cyan" onclick="setEffect(0x62)">Cyan</button>
+        <button class="effect purple" onclick="setEffect(0x63)">Purple</button>
+        <button class="effect white" onclick="setEffect(0x64)">White</button>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="iro.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
